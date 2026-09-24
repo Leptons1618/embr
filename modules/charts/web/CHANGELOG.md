@@ -1,5 +1,14 @@
 # @mussonindustrial/embr-js-chart-js
 
+## Unreleased
+
+### Changes
+
+- Upgrade ApexCharts to `7.5.1` and register the Raincloud feature.
+- Add ApexCharts support for the expanded modern chart type set.
+- Restore Chart.js style reduction and dataset transform behavior.
+- Restore ApexCharts Legacy style reduction and reset-zoom event delivery.
+
 ## 6.0.4
 
 ### Patch Changes

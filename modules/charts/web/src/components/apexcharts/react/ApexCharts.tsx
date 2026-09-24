@@ -7,6 +7,8 @@ import React, {
   useCallback,
 } from 'react'
 import ApexCharts from 'apexcharts'
+import 'apexcharts/features/raincloud'
+import 'apexcharts/features/stats'
 
 import type { ApexOptions } from 'apexcharts'
 import type { ForwardedRef } from 'react'

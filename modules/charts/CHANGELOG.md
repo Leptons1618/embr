@@ -1,5 +1,14 @@
 # @mussonindustrial/embr-charts
 
+## Unreleased
+
+### Changes
+
+- ApexCharts: add first-class Pie, Donut, Funnel, Gauge, Pyramid, Dumbbell, Violin, Raincloud, Streamgraph, Waterfall, Histogram, Sunburst, Unit, and Waffle support.
+- ApexCharts: upgrade runtime to `apexcharts@7.5.1` and add chart-specific data schema fields.
+- Chart.js: restore `style` property reduction and preserve dataset data during script transforms.
+- ApexCharts Legacy: restore `style` property reduction and fire `beforeResetZoomHandler`.
+
 ## 6.0.4
 
 ### Patch Changes

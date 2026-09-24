@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Embr Charts — Codebase and ApexCharts Support Guide</title>
+  <style>
+    :root{--ink:#1a1712;--paper:#fcfbf8;--surface:#f5f2ea;--accent:#b4501e;--accent-deep:#8a3a12;--divider:#e5dfd2;--muted:#6c6456;--mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;--sans:system-ui,-apple-system,"Segoe UI",sans-serif}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.65}main{max-width:1120px;margin:0 auto;padding:48px 24px 96px}.masthead{border-bottom:3px solid var(--ink);padding-bottom:24px;margin-bottom:40px}.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 8px}h1{font-family:Georgia,"Times New Roman",serif;font-weight:400;font-size:clamp(34px,5vw,54px);line-height:1.1;margin:0 0 12px}.standfirst{font-size:19px;color:#57503f;max-width:72ch;margin:0}.meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:24px;font:12px/1.5 var(--mono);color:var(--muted)}.meta b{display:block;color:var(--ink);font-weight:500;margin-top:3px}.summary{background:var(--surface);border:1px solid var(--divider);padding:24px;margin:32px 0 48px}.summary h2{margin-top:0}.summary ul{margin-bottom:0}code,pre{font-family:var(--mono)}code{font-size:.85em;background:var(--surface);border:1px solid var(--divider);padding:1px 5px;white-space:nowrap}pre{background:var(--surface);border:1px solid var(--divider);padding:16px;overflow:auto;font-size:13px;line-height:1.6;white-space:pre-wrap;word-break:break-word}.evidence{background:#f0ede6;border-left:3px solid var(--accent);padding:14px 16px;margin:14px 0 20px;font:12.5px/1.6 var(--mono);white-space:pre-wrap;word-break:break-word}.evidence .src{display:block;font-family:var(--sans);font-size:12px;color:var(--muted);margin-top:8px}.toc{background:#fff;border:1px solid var(--divider);padding:20px 24px;margin-bottom:48px}.toc h2{font-size:20px;margin:0 0 10px}.toc ol{columns:2;margin:0;padding-left:22px}.toc li{margin:5px 0}.toc a{color:var(--accent-deep)}h2{font-family:Georgia,serif;font-weight:400;font-size:29px;margin:56px 0 6px;padding-top:24px;border-top:1px solid var(--divider)}h3{font-size:18px;margin:30px 0 8px}h4{font-size:15px;margin:22px 0 6px}.lead{font-size:18px;color:#57503f;max-width:72ch}.small{font-size:13px;color:var(--muted)}table{border-collapse:collapse;width:100%;margin:16px 0 24px;font-size:14px}th{text-align:left;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#7a7261;border-bottom:2px solid var(--ink);padding:8px 12px 8px 0;vertical-align:bottom}td{border-bottom:1px solid var(--divider);padding:9px 12px 9px 0;vertical-align:top}tr:nth-child(even){background:rgba(245,242,234,.45)}.scroll{overflow-x:auto}.status{font-family:var(--mono);font-size:11px;letter-spacing:.03em;white-space:nowrap}.pass{color:#176b4d}.major{color:var(--accent-deep)}.note{color:#6b6253}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card{border:1px solid var(--divider);background:#fff;padding:18px}.card h3{margin-top:0}.qa{border-top:1px solid var(--divider);padding:22px 0}.qa:first-of-type{border-top:0}.question{font-family:Georgia,serif;font-size:21px;margin:0 0 8px}.answer{max-width:82ch}.answer ol,.answer ul{max-width:82ch}.answer li{margin:7px 0}.path-list{margin:8px 0 16px;padding-left:22px}.path-list li{margin:7px 0}.finding{border:1px solid var(--divider);background:#fff;padding:20px;margin:16px 0}.finding.critical{border-left:4px solid #9b1c31}.finding.major{border-left:4px solid var(--accent)}.finding.note{border-left:4px solid #8a8172}.finding h3{margin:0 0 8px}.finding dl{display:grid;grid-template-columns:100px minmax(0,1fr);gap:5px 14px;margin:0}.finding dt{font:11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-top:3px}.finding dd{margin:0}.finding .evidence{margin:12px 0 0}.fix{border-left:3px solid var(--accent);padding:8px 12px;margin-top:14px;background:var(--surface);font-size:14px}.source{font:12px/1.5 var(--mono);color:var(--muted);word-break:break-word}ul,ol{max-width:82ch}.footnote{font:12px/1.6 var(--mono);color:var(--muted);margin-top:30px;border-top:1px solid var(--divider);padding-top:16px}a{color:var(--accent-deep)}footer{border-top:3px solid var(--ink);margin-top:56px;padding-top:16px;color:var(--muted);font:12px/1.6 var(--mono)}@media(max-width:760px){main{padding:28px 18px 64px}.meta{grid-template-columns:repeat(2,minmax(0,1fr))}.toc ol{columns:1}.grid{grid-template-columns:1fr}.finding dl{grid-template-columns:1fr;gap:2px}.finding dd{margin-bottom:8px}table{font-size:13px}}
+  </style>
+</head>
+<body>
+<main>
+  <header class="masthead">
+    <p class="eyebrow">Codebase note · Embr Charts · developer guide</p>
+    <h1>Embr Charts: architecture, ApexCharts coverage, and extension map</h1>
+    <p class="standfirst">A repository-grounded guide to the Ignition chart module: what ships today, where each chart type is represented, and the smallest safe file set for adding another chart.</p>
+    <div class="meta">
+      <div>Date<b>2026-09-24</b></div>
+      <div>Scope<b>modules/charts</b></div>
+      <div>Method<b>Repository read + official chart catalog</b></div>
+      <div>Source<b>ApexCharts chart-types page</b></div>
+    </div>
+  </header>
+
+  <section class="summary" id="summary">
+    <h2>Executive answer</h2>
+    <ul>
+      <li><strong>Embr Charts is a three-component Ignition module:</strong> modern ApexCharts, Chart.js, and Kyvis-Labs-compatible ApexCharts Legacy.</li>
+      <li><strong>Modern ApexCharts is largely configuration-driven.</strong> The browser wrapper passes the configured type to the pinned ApexCharts library; it does not contain a chart-type switch.</li>
+      <li><strong>The official page lists 26 chart rows / 24 distinct <code>chart.type</code> values.</strong> The modern Embr schema suggests 16 distinct values, and the Kotlin descriptor registers 18 non-base palette recipes.</li>
+      <li><strong>Coverage is not identical across layers.</strong> A type can be in the schema, present as a palette recipe, or only pass through at runtime. The report marks each layer separately.</li>
+      <li><strong>Two concrete drift points need attention:</strong> the <code>pie</code> recipe actually starts with <code>type: "donut"</code>, and the <code>timeline</code> range-bar recipe exists but is not registered in the Kotlin palette.</li>
+      <li><strong>For a standard new ApexCharts type, the normal change set is:</strong> schema suggestion/definitions, one variant JSON file, one thumbnail, and one <code>PaletteEntry</code> registration. A renderer change is normally unnecessary.</li>
+    </ul>
+  </section>
+
+  <nav class="toc" aria-label="Contents">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#architecture">Codebase map</a></li>
+      <li><a href="#apex-matrix">Complete ApexCharts support matrix</a></li>
+      <li><a href="#other-components">Chart.js and Legacy Apex coverage</a></li>
+      <li><a href="#add-chart">How to add chart support</a></li>
+      <li><a href="#qa">Developer Q&amp;A</a></li>
+      <li><a href="#findings">Findings and evidence</a></li>
+      <li><a href="#verification">Verification boundary</a></li>
+    </ol>
+  </nav>
+
+  <section id="architecture">
+    <h2>1. Codebase map</h2>
+    <p class="lead">The module is assembled from four Gradle subprojects. The common project owns the public Perspective contract; gateway and designer projects register it at runtime; the web project renders the browser components.</p>
+    <div class="evidence">settings.gradle.kts:28-31
+:modules:charts:common
+:modules:charts:designer
+:modules:charts:gateway
+:modules:charts:web
+
+modules/charts/build.gradle.kts:6-10
+name.set("Embr Charts")
+id.set("com.mussonindustrial.embr.charts")</div>
+
+    <h3>Request and registration flow</h3>
+    <pre>Ignition Gateway startup
+  -&gt; ChartsGatewayHook
+  -&gt; ChartsGatewayContext.registerComponents()
+  -&gt; ApexCharts / ApexChartsLegacy / ChartJs descriptors
+
+Ignition Designer startup
+  -&gt; ChartsDesignerHook
+  -&gt; ChartsDesignerContext.registerComponents()
+  -&gt; palette entries + schema resources
+
+Browser bundle
+  -&gt; /res/embr-charts/embr-charts-client.js
+  -&gt; ComponentRegistry.register(...)
+  -&gt; React/Perspective component
+  -&gt; ApexCharts library instance</pre>
+
+    <h3>Layer map</h3>
+    <div class="scroll"><table>
+      <thead><tr><th>Layer</th><th>Primary files</th><th>Developer responsibility</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Module packaging</strong></td><td><code>modules/charts/build.gradle.kts</code></td><td>Module ID, Ignition dependency, project scopes, and gateway/designer hooks.</td></tr>
+        <tr><td><strong>JVM descriptor</strong></td><td><code>common/.../ApexCharts.kt</code><br><code>common/.../ChartJs.kt</code><br><code>common/.../ApexChartsLegacy.kt</code></td><td>Component IDs, palette entries, schema binding, and default metadata names.</td></tr>
+        <tr><td><strong>Public schema</strong></td><td><code>common/src/main/resources/schemas/components/&lt;component-id&gt;/props.json</code></td><td>Perspective properties, defaults, editor suggestions, data/options structures, and events.</td></tr>
+        <tr><td><strong>Palette payload/assets</strong></td><td><code>.../variants/&lt;variant-id&gt;.props.json</code><br><code>designer/.../thumbnails/&lt;variant-id&gt;.png</code></td><td>Drop-in example data and the visible thumbnail for each palette entry.</td></tr>
+        <tr><td><strong>Browser renderer</strong></td><td><code>web/src/client.ts</code><br><code>web/src/components/apexcharts/*</code></td><td>Register the Perspective component, transform props/scripts, render, update, and destroy.</td></tr>
+        <tr><td><strong>Gateway scripts/events</strong></td><td><code>gateway/.../ChartsGatewayContext.kt</code><br><code>.../JavaScriptProxyableComponentModelDelegate.kt</code></td><td>Expose the component to the Gateway and bridge client-side chart references.</td></tr>
+        <tr><td><strong>Designer lifecycle</strong></td><td><code>designer/.../ChartsDesignerContext.kt</code></td><td>Register and remove the descriptors in the Designer.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>Modern ApexCharts request path</h3>
+    <ol>
+      <li>The descriptor ID is <code>embr.chart.apex-charts</code>.</li>
+      <li>The descriptor calls the inherited schema loader, which resolves <code>/schemas/components/embr.chart.apex-charts/props.json</code>.</li>
+      <li>The designer adds each Kotlin <code>PaletteEntry</code>; <code>PaletteEntry</code> resolves the matching variant JSON and thumbnail by the same variant ID.</li>
+      <li>The browser bundle registers <code>ApexChartsComponentMeta</code>.</li>
+      <li>The component reducer reads <code>type</code>, <code>options</code>, <code>series</code>, <code>events</code>, <code>redraw</code>, and <code>style</code>.</li>
+      <li>The React wrapper merges the configured type into <code>options.chart.type</code>, creates <code>new ApexCharts(container, config)</code>, and handles updates/redraws.</li>
+    </ol>
+    <div class="evidence">libraries/perspective/common/src/main/kotlin/com/mussonindustrial/embr/perspective/common/component/PerspectiveComponent.kt:7-15
+JsonSchema.parse(
+  this::class.java.getResourceAsStream("/schemas/components/${id}/props.json")
+)
+
+libraries/perspective/common/src/main/kotlin/com/mussonindustrial/embr/perspective/common/component/PaletteEntry.kt:31-32
+getImage(clazz, "/images/components/${componentId}/thumbnails/${variantId}.png")
+getJsonProps(clazz, "/schemas/components/${componentId}/variants/${variantId}.props.json")</div>
+  </section>
+
+  <section id="apex-matrix">
+    <h2>2. Complete ApexCharts support matrix</h2>
+    <p class="lead">The official catalog currently lists 26 named chart rows. Column and Bar share <code>chart.type: 'bar'</code>; Mixed uses Line as its base type. The matrix keeps those distinctions visible instead of treating the list as 26 independent runtime strings.</p>
+    <div class="evidence">https://apexcharts.com/docs/chart-types/
+"ApexCharts supports 20+ chart types. Each is controlled by the chart.type option and has its own data format and configuration namespace under plotOptions."
+
+Official rows counted from the page: 18 axis rows + 8 non-axis rows = 26.
+Distinct chart.type values after collapsing Bar/Column and Mixed/Line: 24.</div>
+
+    <h3>Coverage definitions</h3>
+    <ul>
+      <li><strong>Schema:</strong> the type appears in <code>embr.chart.apex-charts/props.json</code> suggestions. The field is a string with suggestions, not a strict enum.</li>
+      <li><strong>Palette:</strong> a Kotlin <code>PaletteEntry</code> is registered, with a matching variant JSON and thumbnail.</li>
+      <li><strong>Runtime path:</strong> the modern renderer forwards the string to the external ApexCharts library. Repository source proves the pass-through; it does not independently prove that every external-library type renders in this pinned version.</li>
+    </ul>
+
+    <div class="scroll"><table>
+      <thead><tr><th>Official chart</th><th>Official <code>chart.type</code></th><th>Modern schema</th><th>Modern palette / recipe</th><th>Assessment</th></tr></thead>
+      <tbody>
+        <tr><td>Line</td><td><code>line</code></td><td class="status pass">Yes</td><td><code>line</code></td><td class="status pass">Direct</td></tr>
+        <tr><td>Area</td><td><code>area</code></td><td class="status pass">Yes</td><td><code>area</code></td><td class="status pass">Direct</td></tr>
+        <tr><td>Bar</td><td><code>bar</code></td><td class="status pass">Yes</td><td><code>bar</code></td><td class="status pass">Direct</td></tr>
+        <tr><td>Column</td><td><code>bar</code> + vertical orientation</td><td class="status note">Via <code>bar</code></td><td><code>column</code> root <code>bar</code></td><td class="status pass">Recipe alias</td></tr>
+        <tr><td>Scatter</td><td><code>scatter</code></td><td class="status pass">Yes</td><td><code>scatter</code></td><td class="status pass">Direct</td></tr>
+        <tr><td>Bubble</td><td><code>bubble</code></td><td class="status pass">Yes</td><td><code>bubble</code></td><td class="status pass">Direct</td></tr>
+        <tr><td>Heatmap</td><td><code>heatmap</code></td><td class="status pass">Yes</td><td><code>heatmap</code></td><td class="status pass">Direct</td></tr>
+        <tr><td>Candlestick</td><td><code>candlestick</code></td><td class="status pass">Yes</td><td><code>candlestick</code></td><td class="status pass">Direct</td></tr>
+        <tr><td>Box Plot</td><td><code>boxPlot</code></td><td class="status pass">Yes</td><td><code>boxplot</code> root <code>boxPlot</code></td><td class="status pass">Direct, normalized ID</td></tr>
+        <tr><td>Violin</td><td><code>violin</code></td><td class="status major">No</td><td class="status major">No</td><td class="status note">Not surfaced</td></tr>
+        <tr><td>Raincloud</td><td><code>raincloud</code></td><td class="status major">No</td><td class="status major">No</td><td class="status note">Not surfaced</td></tr>
+        <tr><td>Range Bar</td><td><code>rangeBar</code></td><td class="status pass">Yes</td><td><code>timeline</code> payload exists; unregistered</td><td class="status major">Gap</td></tr>
+        <tr><td>Range Area</td><td><code>rangeArea</code></td><td class="status pass">Yes</td><td><code>rangearea</code></td><td class="status pass">Direct, normalized ID</td></tr>
+        <tr><td>Streamgraph</td><td><code>streamgraph</code></td><td class="status major">No</td><td class="status major">No</td><td class="status note">Not surfaced</td></tr>
+        <tr><td>Waterfall</td><td><code>waterfall</code></td><td class="status major">No</td><td class="status major">No</td><td class="status note">Not surfaced</td></tr>
+        <tr><td>Dumbbell</td><td><code>dumbbell</code></td><td class="status major">No</td><td class="status major">No</td><td class="status note">Not surfaced</td></tr>
+        <tr><td>Treemap</td><td><code>treemap</code></td><td class="status pass">Yes</td><td><code>treemap</code></td><td class="status pass">Direct</td></tr>
+        <tr><td>Mixed</td><td><code>line</code> base</td><td class="status note">Base only</td><td><code>mixed</code>, per-series <code>column</code>/<code>area</code></td><td class="status pass">Recipe</td></tr>
+        <tr><td>Pie</td><td><code>pie</code></td><td class="status pass">Yes</td><td><code>pie</code> label; payload is <code>donut</code></td><td class="status major">Mismatch</td></tr>
+        <tr><td>Donut</td><td><code>donut</code></td><td class="status pass">Yes</td><td>Delivered through <code>pie</code> recipe</td><td class="status note">Alias</td></tr>
+        <tr><td>Radial Bar</td><td><code>radialBar</code></td><td class="status pass">Yes</td><td><code>radialbar</code></td><td class="status pass">Direct, normalized ID</td></tr>
+        <tr><td>Gauge</td><td><code>gauge</code></td><td class="status major">No</td><td class="status major">No</td><td class="status note">Not surfaced</td></tr>
+        <tr><td>Radar</td><td><code>radar</code></td><td class="status pass">Yes</td><td><code>radar</code></td><td class="status pass">Direct</td></tr>
+        <tr><td>Polar Area</td><td><code>polarArea</code></td><td class="status pass">Yes</td><td><code>polararea</code></td><td class="status pass">Direct, normalized ID</td></tr>
+        <tr><td>Funnel</td><td><code>funnel</code></td><td class="status major">No</td><td><code>funnel</code> root <code>bar</code> + <code>isFunnel</code></td><td class="status note">Recipe</td></tr>
+        <tr><td>Pyramid</td><td><code>pyramid</code></td><td class="status major">No</td><td class="status major">No</td><td class="status note">Not surfaced</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>Counted conclusions</h3>
+    <div class="grid">
+      <div class="card"><h3>16 / 24</h3><p>Distinct official <code>chart.type</code> values are suggested by the modern schema.</p><p class="small">The field is not an enum, so this is an editor/advertising contract, not runtime enforcement.</p></div>
+      <div class="card"><h3>18 non-base</h3><p>Modern Kotlin palette recipes are registered, including recipe-only IDs such as <code>column</code>, <code>funnel</code>, <code>mixed</code>, and <code>slope</code>.</p><p class="small"><code>timeline</code> is a nineteenth non-base variant resource but is not registered.</p></div>
+      <div class="card"><h3>16 direct</h3><p>Official rows have a direct registered recipe, treating Column, Funnel, and Mixed as recipe realizations and excluding the Pie/Donut mismatch.</p><p class="small">The exact mapping is intentionally conservative.</p></div>
+      <div class="card"><h3>8 not surfaced</h3><p><code>violin</code>, <code>raincloud</code>, <code>streamgraph</code>, <code>waterfall</code>, <code>dumbbell</code>, <code>gauge</code>, and <code>pyramid</code> are absent from the modern schema suggestions; Funnel is recipe-only.</p><p class="small">[INFERENCE] Runtime may accept some values through ApexCharts, but repository evidence does not prove it.</p></div>
+    </div>
+
+    <h3>Important naming details</h3>
+    <ul>
+      <li><code>boxplot</code>, <code>polararea</code>, <code>radialbar</code>, and <code>rangearea</code> are palette IDs; the payload type remains the ApexCharts spelling <code>boxPlot</code>, <code>polarArea</code>, <code>radialBar</code>, and <code>rangeArea</code>.</li>
+      <li><code>column</code> and <code>funnel</code> use root type <code>bar</code> with orientation/plot options.</li>
+      <li><code>mixed</code> uses root <code>line</code> and per-series types.</li>
+      <li><code>slope</code> is an Embr recipe using <code>line</code> plus <code>isSlopeChart: true</code>; it is not one of the 26 official rows on the cited page.</li>
+    </ul>
+    <div class="evidence">modules/charts/common/src/main/resources/schemas/components/embr.chart.apex-charts/props.json:768-788
+"chart_type": {
+  "description": "Chart type.",
+  "suggestions": [
+    "area", "bar", "boxPlot", "bubble", "candlestick", "donut",
+    "heatmap", "line", "pie", "polarArea", "radar", "radialBar",
+    "rangeArea", "rangeBar", "scatter", "treemap"
+  ],
+  "type": "string"
+}
+
+modules/charts/common/src/main/kotlin/com/mussonindustrial/ignition/embr/charts/component/chart/ApexCharts.kt:176-194
+.addPaletteEntry(VARIANT_AREA)
+.addPaletteEntry(VARIANT_BAR)
+.addPaletteEntry(VARIANT_BOXPLOT)
+.addPaletteEntry(VARIANT_BUBBLE)
+.addPaletteEntry(VARIANT_CANDLESTICK)
+.addPaletteEntry(VARIANT_COLUMN)
+.addPaletteEntry(VARIANT_FUNNEL)
+.addPaletteEntry(VARIANT_HEATMAP)
+.addPaletteEntry(VARIANT_LINE)
+.addPaletteEntry(VARIANT_MIXED)
+.addPaletteEntry(VARIANT_PIE)
+.addPaletteEntry(VARIANT_POLARAREA)
+.addPaletteEntry(VARIANT_RADAR)
+.addPaletteEntry(VARIANT_RADIALBAR)
+.addPaletteEntry(VARIANT_RANGEAREA)
+.addPaletteEntry(VARIANT_SCATTER)
+.addPaletteEntry(VARIANT_SLOPE)
+.addPaletteEntry(VARIANT_TREEMAP)</div>
+  </section>
+
+  <section id="other-components">
+    <h2>3. Chart.js and Legacy Apex coverage</h2>
+    <p class="lead">The module is not Apex-only. Chart.js has a wider third-party plugin surface, while Legacy Apex is a separate compatibility contract and should not be changed as a side effect of modern Apex work.</p>
+
+    <h3>Chart.js component: <code>embr.chart.chart-js</code></h3>
+    <p>Schema-level type suggestions: <code>bar</code>, <code>boxplot</code>, <code>bubble</code>, <code>dendrogram</code>, <code>doughnut</code>, <code>euler</code>, <code>forceDirectedGraph</code>, <code>funnel</code>, <code>graph</code>, <code>line</code>, <code>matrix</code>, <code>pcp</code>, <code>pie</code>, <code>polarArea</code>, <code>radar</code>, <code>scatter</code>, <code>sankey</code>, <code>tree</code>, <code>treemap</code>, <code>venn</code>, <code>violin</code>, and <code>wordCloud</code>.</p>
+    <p>Registered default palette recipes: <code>bar</code>, <code>bubble</code>, <code>boxplot</code>, <code>doughnut</code>, <code>line</code>, <code>pie</code>, <code>polararea</code>, <code>radar</code>, and <code>violin</code>, plus <code>base</code>.</p>
+    <p>The web plugin registry also registers third-party controllers/elements for boxplot/violin, graph/tree variants, matrix, parallel coordinates, Sankey, treemap, funnel, Venn/Euler, word cloud, stacked 100, zoom, annotations, and other plugins. That means schema/runtime coverage is broader than the nine visible default recipes.</p>
+    <div class="evidence">modules/charts/common/src/main/resources/schemas/components/embr.chart.chart-js/props.json:330-357
+"chart_type": {
+  "default": "line",
+  "suggestions": [
+    "bar", "boxplot", "bubble", "dendrogram", "doughnut", "euler",
+    "forceDirectedGraph", "funnel", "graph", "line", "matrix", "pcp",
+    "pie", "polarArea", "radar", "scatter", "sankey", "tree", "treemap",
+    "venn", "violin", "wordCloud"
+  ],
+  "type": "string"
+}
+
+modules/charts/web/src/components/chartjs/plugins/index.ts:12-118
+Chart.register(
+  BoxPlotController,
+  ViolinController,
+  ...
+  MatrixController,
+  MatrixElement,
+  ParallelCoordinatesController,
+  SankeyController,
+  FunnelController,
+  VennDiagramController,
+  WordCloudController,
+  TimestackScale
+)</div>
+
+    <h3>Legacy Apex component: <code>kyvislabs.display.apexchart</code></h3>
+    <p>Legacy schema enum: <code>line</code>, <code>area</code>, <code>bar</code>, <code>radar</code>, <code>histogram</code>, <code>pie</code>, <code>donut</code>, <code>radialBar</code>, <code>scatter</code>, <code>bubble</code>, <code>heatmap</code>, <code>candlestick</code>, <code>polarArea</code>, <code>rangeBar</code>, <code>treemap</code>, <code>rangeArea</code>, and <code>boxPlot</code>.</p>
+    <p>Legacy default palette: <code>base</code>, <code>line</code>, <code>pie</code>, <code>radar</code>, and <code>timeseries</code>. It also has a separate event descriptor set and a gateway delegate with explicit scripting methods. A modern type addition does not automatically extend this component.</p>
+    <div class="evidence">modules/charts/common/src/main/resources/schemas/components/kyvislabs.display.apexchart/props.json:7-29
+"enum": [
+  "line", "area", "bar", "radar", "histogram", "pie", "donut",
+  "radialBar", "scatter", "bubble", "heatmap", "candlestick",
+  "polarArea", "rangeBar", "treemap", "rangeArea", "boxPlot"
+]
+
+modules/charts/common/src/main/kotlin/com/mussonindustrial/ignition/embr/charts/component/chart/ApexChartsLegacy.kt:216-224
+.addPaletteEntry(VARIANT_BASE)
+.addPaletteEntry(VARIANT_LINE)
+.addPaletteEntry(VARIANT_PIE)
+.addPaletteEntry(VARIANT_RADAR)
+.addPaletteEntry(VARIANT_TIMESERIES)</div>
+  </section>
+
+  <section id="add-chart">
+    <h2>4. How to add chart support</h2>
+    <p class="lead">Choose the narrowest path that matches the request. A new chart type in the existing ApexCharts component is not the same as a new Perspective component.</p>
+
+    <div class="qa">
+      <h3 class="question">Q: I want to add a standard ApexCharts type such as Waterfall, Gauge, or Violin. What files do I touch?</h3>
+      <div class="answer">
+        <ol>
+          <li><strong>Confirm the pinned library.</strong> Check <code>modules/charts/web/package.json</code> and <code>yarn.lock</code>. The modern renderer uses the external <code>apexcharts</code> package; upgrade the dependency first if the pinned version does not support the requested type.</li>
+          <li><strong>Advertise the exact ApexCharts spelling.</strong> Add <code>waterfall</code>, <code>gauge</code>, or <code>violin</code> to <code>modules/charts/common/src/main/resources/schemas/components/embr.chart.apex-charts/props.json</code> under the <code>chart_type</code> suggestions. If per-series type values also need it, confirm the shared schema definition is intended for that field.</li>
+          <li><strong>Add a sample variant.</strong> Create <code>.../embr.chart.apex-charts/variants/&lt;variant-id&gt;.props.json</code> with the root <code>type</code>, representative <code>series</code>, and the type-specific <code>options</code>. Follow the shape of <code>base.props.json</code>.</li>
+          <li><strong>Add the thumbnail.</strong> Create <code>.../designer/src/main/resources/images/components/embr.chart.apex-charts/thumbnails/&lt;variant-id&gt;.png</code>. The filename must exactly match the variant ID.</li>
+          <li><strong>Register the palette entry.</strong> Add a <code>PaletteEntry</code> in <code>ApexCharts.kt</code>, then add <code>.addPaletteEntry(VARIANT_...)</code> to the descriptor.</li>
+          <li><strong>Normally do not change the renderer.</strong> <code>ApexChartsComponent.tsx</code> already forwards the type and <code>react/ApexCharts.tsx</code> already handles type changes by destroy/redraw.</li>
+          <li><strong>Add proof.</strong> Verify the drop-in component in Designer/runtime, then change its type and update series/options. Add a focused test if wrapper or lifecycle behavior changes.</li>
+          <li><strong>Update release documentation.</strong> Record the new palette/type in <code>modules/charts/CHANGELOG.md</code>; update the web changelog only when web behavior or dependencies change.</li>
+        </ol>
+        <div class="fix"><strong>FIX:</strong> Keep the variant ID, JSON filename, thumbnail filename, and Kotlin registration in lockstep. A schema suggestion alone does not create a visible palette entry.</div>
+      </div>
+    </div>
+
+    <div class="qa">
+      <h3 class="question">Q: What is the minimum file set for a type already supported by the external ApexCharts library?</h3>
+      <div class="answer">
+        <ul class="path-list">
+          <li><code>modules/charts/common/src/main/resources/schemas/components/embr.chart.apex-charts/props.json</code></li>
+          <li><code>modules/charts/common/src/main/resources/schemas/components/embr.chart.apex-charts/variants/&lt;id&gt;.props.json</code></li>
+          <li><code>modules/charts/designer/src/main/resources/images/components/embr.chart.apex-charts/thumbnails/&lt;id&gt;.png</code></li>
+          <li><code>modules/charts/common/src/main/kotlin/com/mussonindustrial/ignition/embr/charts/component/chart/ApexCharts.kt</code></li>
+          <li><code>modules/charts/CHANGELOG.md</code> for release notes</li>
+        </ul>
+        <p>No new Gateway or Designer context is needed. Both contexts already register the <code>ApexCharts</code> component descriptor.</p>
+      </div>
+    </div>
+
+    <div class="qa">
+      <h3 class="question">Q: When do I need to touch the TypeScript renderer?</h3>
+      <div class="answer">
+        <p>Touch the renderer only when the new chart needs behavior beyond the existing ApexCharts contract:</p>
+        <ul>
+          <li>new root props or a different reducer shape: <code>ApexChartsComponent.tsx</code> and <code>props.json</code>;</li>
+          <li>custom series preparation, compatibility normalization, or redraw semantics: <code>react/ApexCharts.tsx</code>;</li>
+          <li>new Perspective events: schema event definitions plus the component event wiring;</li>
+          <li>new client scripting methods: the client delegate and, if needed, a Gateway delegate.</li>
+        </ul>
+        <div class="evidence">modules/charts/web/src/components/apexcharts/react/ApexCharts.tsx:51-69
+const chartOptions = useMemo(() =&gt; {
+  return merge(options, {
+    chart: { type, height, width },
+  }) as ApexOptions
+}, [type, height, width, options])
+
+const config = extend(chartOptions, { series })
+chartRef.current = new ApexCharts(containerRef.current, config)</div>
+      </div>
+    </div>
+
+    <div class="qa">
+      <h3 class="question">Q: How do I add a new Chart.js type?</h3>
+      <div class="answer">
+        <ol>
+          <li>Add the package to <code>modules/charts/web/package.json</code> and update the lockfile.</li>
+          <li>Import and register its controller/element/plugin in <code>modules/charts/web/src/components/chartjs/plugins/index.ts</code>.</li>
+          <li>Add the type to <code>embr.chart.chart-js/props.json</code> and add type-specific data/options definitions if the plugin shape is not covered.</li>
+          <li>Add <code>.../embr.chart.chart-js/variants/&lt;id&gt;.props.json</code> and the matching thumbnail.</li>
+          <li>Add the Kotlin <code>PaletteEntry</code> in <code>ChartJs.kt</code>.</li>
+          <li>Exercise the real chart with a valid plugin-specific dataset; do not rely only on the schema passing.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="qa">
+      <h3 class="question">Q: When is a new component ID required?</h3>
+      <div class="answer">
+        <p>Create a new ID only for a genuinely different Perspective component, not for another ApexCharts type. The new component then needs all of the following:</p>
+        <ol>
+          <li>a JVM <code>PerspectiveComponent</code> descriptor;</li>
+          <li><code>common/src/main/resources/schemas/components/&lt;new-id&gt;/props.json</code>;</li>
+          <li>a browser <code>ComponentMeta</code> and renderer;</li>
+          <li>exports and <code>ComponentRegistry.register(...)</code> in the web entrypoint;</li>
+          <li>Gateway and Designer context registration;</li>
+          <li>icons, thumbnails, dependencies, and a lifecycle-specific delegate if required.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="qa">
+      <h3 class="question">Q: How do I test a new chart?</h3>
+      <div class="answer">
+        <p>The repository has no chart-specific test files under the Vite source globs, and the test config permits an empty test set. For a new chart, do not treat a passing typecheck as proof. At minimum:</p>
+        <ol>
+          <li>drop the variant into a Perspective Designer project;</li>
+          <li>render its sample data in a real client session;</li>
+          <li>change the configured type;</li>
+          <li>change <code>series</code> and <code>options</code> while mounted;</li>
+          <li>exercise any exposed lifecycle or scripting methods;</li>
+          <li>check the console for ApexCharts errors and verify destroy/re-render behavior.</li>
+        </ol>
+        <p>Add a permanent focused test when the implementation changes or the bug is reproducible. A test that only checks registration or file existence is insufficient.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="qa">
+    <h2>5. Developer Q&amp;A quick reference</h2>
+    <div class="grid">
+      <div class="card"><h3>Where is the public component contract?</h3><p><code>common/src/main/resources/schemas/components/&lt;component-id&gt;/props.json</code>. The descriptor ID selects the resource path.</p></div>
+      <div class="card"><h3>Where is the visible palette list?</h3><p><code>common/.../component/chart/ApexCharts.kt</code>. It is explicit Kotlin, not generated from the variant directory.</p></div>
+      <div class="card"><h3>Where does the chart render?</h3><p><code>web/src/components/apexcharts/ApexChartsComponent.tsx</code> and <code>.../react/ApexCharts.tsx</code>.</p></div>
+      <div class="card"><h3>Does a new type need a new Gateway component?</h3><p>No, if it uses the existing modern component. Gateway registration already exists; the external chart instance is already exposed through the modern JavaScript proxy.</p></div>
+      <div class="card"><h3>Why is a type suggestion not a strict allowlist?</h3><p>The modern schema defines a string with suggestions. The reducer reads a string and the renderer passes it through. External library behavior is the remaining boundary.</p></div>
+      <div class="card"><h3>Should I update Legacy Apex too?</h3><p>Only if compatibility is an explicit requirement. Its ID, schema, client implementation, events, and delegate are separate.</p></div>
+    </div>
+  </section>
+
+  <section id="findings">
+    <h2>6. Findings and evidence</h2>
+    <p class="lead">Severity labels are intentionally textual. A <code>PASS</code> finding is a verified source-level contract; a <code>NOTE</code> marks an inference or boundary that still needs runtime confirmation.</p>
+
+    <article class="finding major" id="finding-01">
+      <h3>F-01 · MAJOR · Coverage is split across schema, palette, and runtime</h3>
+      <dl>
+        <dt>Observation</dt><dd>The modern Apex component has 16 schema suggestions, 18 registered non-base palette recipes, and a runtime pass-through that is not a strict allowlist.</dd>
+        <dt>Evidence</dt><dd class="evidence">props.json:768-788 lists 16 suggestions; ApexCharts.kt:176-194 adds 18 non-base palette entries; ApexChartsComponent.tsx:117-125 reads the string; react/ApexCharts.tsx:51-69 merges it into <code>options.chart.type</code> and constructs <code>new ApexCharts(...)</code>.</dd>
+        <dt>Location</dt><dd><code>modules/charts/common/src/main/resources/schemas/components/embr.chart.apex-charts/props.json:768-788</code><br><code>modules/charts/common/src/main/kotlin/com/mussonindustrial/ignition/embr/charts/component/chart/ApexCharts.kt:176-194</code><br><code>modules/charts/web/src/components/apexcharts/react/ApexCharts.tsx:51-69</code></dd>
+      </dl>
+      <div class="fix"><strong>FIX:</strong> Define “supported” per layer in future documentation and release notes: external library, schema editor, palette recipe, and verified runtime behavior.</div>
+    </article>
+
+    <article class="finding major" id="finding-02">
+      <h3>F-02 · MAJOR · Pie and Donut have mismatched palette semantics</h3>
+      <dl>
+        <dt>Observation</dt><dd>The modern schema advertises both <code>pie</code> and <code>donut</code>, but the visible <code>pie</code> recipe starts with <code>type: "donut"</code> and there is no direct root-<code>pie</code> variant.</dd>
+        <dt>Evidence</dt><dd class="evidence">variants/pie.props.json:1-14
+{
+  "type": "donut",
+  "series": [44, 55, 41, 17, 15],
+  "options": {
+    "chart": {},
+    "title": { "align": "left", "text": "Pie Chart" }
+  }
+}</dd>
+        <dt>Location</dt><dd><code>modules/charts/common/src/main/resources/schemas/components/embr.chart.apex-charts/variants/pie.props.json:1-14</code></dd>
+      </dl>
+      <div class="fix"><strong>FIX:</strong> Add a real <code>pie</code> variant and retain <code>donut</code> as a separately named recipe, or rename the existing palette label to “Donut.”</div>
+    </article>
+
+    <article class="finding major" id="finding-03">
+      <h3>F-03 · MAJOR · Range Bar has an orphaned example</h3>
+      <dl>
+        <dt>Observation</dt><dd>A <code>rangeBar</code> variant and thumbnail exist, but <code>timeline</code> is not added to the modern descriptor's palette chain.</dd>
+        <dt>Evidence</dt><dd class="evidence">variants/timeline.props.json:1-2
+{
+  "type": "rangeBar",
+  ...
+}
+
+ApexCharts.kt:176-194 registers area through treemap, but has no VARIANT_TIMELINE or .addPaletteEntry(VARIANT_TIMELINE).</dd>
+        <dt>Location</dt><dd><code>modules/charts/common/src/main/resources/schemas/components/embr.chart.apex-charts/variants/timeline.props.json:1-2</code><br><code>modules/charts/common/src/main/kotlin/com/mussonindustrial/ignition/embr/charts/component/chart/ApexCharts.kt:15-197</code></dd>
+      </dl>
+      <div class="fix"><strong>FIX:</strong> Register <code>timeline</code> using the existing JSON and PNG, or create a deliberate <code>rangeBar</code> alias with matching resources.</div>
+    </article>
+
+    <article class="finding note" id="finding-04">
+      <h3>F-04 · NOTE · The external library boundary is not locally proven</h3>
+      <dl>
+        <dt>Observation</dt><dd>The source proves that a configured type reaches the external ApexCharts instance, but repository-only evidence does not prove that every official or newly suggested type renders under the pinned dependency version.</dd>
+        <dt>Evidence</dt><dd class="evidence">modules/charts/web/package.json:18-20
+"apexcharts": "3.54.1"
+
+ApexChartsComponent.tsx:69-79
+&lt;Chart
+  type={props.props.type}
+  options={options}
+  series={series}
+  redraw={props.props.redraw}
+/&gt;
+
+react/ApexCharts.tsx:66-67
+chartRef.current = new ApexCharts(containerRef.current, config)
+void chartRef.current.render()</dd>
+        <dt>Location</dt><dd><code>modules/charts/web/package.json:18-20</code><br><code>modules/charts/web/src/components/apexcharts/ApexChartsComponent.tsx:69-79</code><br><code>modules/charts/web/src/components/apexcharts/react/ApexCharts.tsx:66-67</code></dd>
+      </dl>
+      <div class="fix"><strong>FIX:</strong> Verify each new type in a real Ignition client session with representative data before labeling it fully supported.</div>
+    </article>
+
+    <article class="finding note" id="finding-05">
+      <h3>F-05 · NOTE · Chart-specific tests and source examples are absent</h3>
+      <dl>
+        <dt>Observation</dt><dd>No chart test files were found under the web source test globs; the Vite test configuration explicitly accepts zero tests.</dd>
+        <dt>Evidence</dt><dd class="evidence">modules/charts/web/vite.config.ts:38-46
+test: {
+  passWithNoTests: true,
+  ...
+  include: [
+    'src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
+    '__tests__/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
+  ],
+}</dd>
+        <dt>Location</dt><dd><code>modules/charts/web/vite.config.ts:38-46</code><br><code>modules/charts/web/src</code> (no matching chart test files found)</dd>
+      </dl>
+      <div class="fix"><strong>FIX:</strong> For chart changes, use a real Designer/runtime smoke path and add a focused regression test when behavior changes.</div>
+    </article>
+
+    <article class="finding note" id="finding-06">
+      <h3>F-06 · NOTE · Legacy Apex is a separate compatibility contract</h3>
+      <dl>
+        <dt>Observation</dt><dd>Legacy Apex has a different ID, a 17-value enum, a separate event descriptor set, a separate browser implementation, and a specialized gateway delegate.</dd>
+        <dt>Evidence</dt><dd class="evidence">ApexChartsLegacy.kt:15
+override val id: String = "kyvislabs.display.apexchart"
+
+kyvislabs.display.apexchart/props.json:7-29 has its own 17-value enum.
+
+ChartsGatewayContext.kt:27-30
+ApexCharts.asGatewayComponent { JavaScriptProxyableComponentModelDelegate(it) }
+ApexChartsLegacy.asGatewayComponent { ApexChartsLegacyModelDelegate(it) }</dd>
+        <dt>Location</dt><dd><code>modules/charts/common/src/main/kotlin/com/mussonindustrial/ignition/embr/charts/component/chart/ApexChartsLegacy.kt:13-224</code><br><code>modules/charts/gateway/src/main/kotlin/com/mussonindustrial/ignition/embr/charts/ChartsGatewayContext.kt:27-30</code></dd>
+      </dl>
+      <div class="fix"><strong>FIX:</strong> Treat legacy compatibility as an explicit scope decision; do not copy modern changes into it without testing the old scripting/event contract.</div>
+    </article>
+  </section>
+
+  <section id="verification">
+    <h2>7. Verification boundary</h2>
+    <p>This artifact is a repository investigation, not a runtime certification. The following were verified from source:</p>
+    <ul>
+      <li>module subproject inclusion and packaging metadata;</li>
+      <li>component IDs, descriptor palette registrations, schema resources, and registration contexts;</li>
+      <li>the modern ApexCharts type pass-through and update/redraw lifecycle;</li>
+      <li>the complete local schema/palette lists and the cited ApexCharts official catalog;</li>
+      <li>the absence of matching chart test files under the configured web source globs.</li>
+    </ul>
+    <p>Not verified here:</p>
+    <ul>
+      <li>visual rendering of every chart in a running Ignition Gateway/Designer session;</li>
+      <li>external ApexCharts behavior for every official type at version 3.54.1;</li>
+      <li>actual client-side scripting/event behavior in a deployed module;</li>
+      <li>whether every listed Chart.js package is active; the source registration list is the stronger evidence for active controllers/plugins.</li>
+    </ul>
+    <p class="footnote">Method: read-only source inspection of <code>modules/charts</code> and directly related Perspective integration files, plus the ApexCharts official chart-types page. Evidence blocks quote repository text or source paths verbatim. Findings and machine-readable data are intentionally kept in one-to-one agreement.</p>
+  </section>
+
+  <footer>Embr Charts developer guide · 2026-09-24 · repository evidence boundary documented above · machine-readable data: <a href="#report-data">#report-data</a></footer>
+
+  <script type="application/json" id="report-data">
+  {
+    "title": "Embr Charts: architecture, ApexCharts coverage, and extension map",
+    "date": "2026-09-24",
+    "scope": "modules/charts and directly related Perspective registration/rendering files",
+    "summary": [
+      "Embr Charts exposes modern ApexCharts, Chart.js, and Legacy ApexCharts as three Perspective components.",
+      "The modern ApexCharts runtime forwards a configured type to the external ApexCharts library; schema suggestions and palette recipes are separate concerns.",
+      "The official catalog lists 26 chart rows and 24 distinct chart.type values; the modern schema suggests 16 distinct values and the descriptor registers 18 non-base palette recipes.",
+      "The normal extension path is schema, variant JSON, thumbnail, Kotlin PaletteEntry, and focused runtime proof; a renderer change is normally unnecessary for a standard library type."
+    ],
+    "findings": [
+      {
+        "id": "F-01",
+        "severity": "MAJOR",
+        "section": "Coverage is split across schema, palette, and runtime",
+        "observation": "The modern Apex component has 16 schema suggestions, 18 registered non-base palette recipes, and a runtime pass-through that is not a strict allowlist.",
+        "evidence": "props.json:768-788 lists 16 suggestions; ApexCharts.kt:176-194 adds 18 non-base palette entries; ApexChartsComponent.tsx:117-125 reads the string; react/ApexCharts.tsx:51-69 merges it into options.chart.type and constructs new ApexCharts(...).",
+        "location": "modules/charts/common/src/main/resources/schemas/components/embr.chart.apex-charts/props.json:768-788; modules/charts/common/src/main/kotlin/com/mussonindustrial/ignition/embr/charts/component/chart/ApexCharts.kt:176-194; modules/charts/web/src/components/apexcharts/react/ApexCharts.tsx:51-69"
+      },
+      {
+        "id": "F-02",
+        "severity": "MAJOR",
+        "section": "Pie and Donut have mismatched palette semantics",
+        "observation": "The modern schema advertises both pie and donut, but the visible pie recipe starts with type: donut and there is no direct root-pie variant.",
+        "evidence": "variants/pie.props.json:1-14 contains type: donut and title text: Pie Chart.",
+        "location": "modules/charts/common/src/main/resources/schemas/components/embr.chart.apex-charts/variants/pie.props.json:1-14"
+      },
+      {
+        "id": "F-03",
+        "severity": "MAJOR",
+        "section": "Range Bar has an orphaned example",
+        "observation": "A rangeBar variant and thumbnail exist, but timeline is not added to the modern descriptor palette chain.",
+        "evidence": "variants/timeline.props.json:1-2 contains type: rangeBar; ApexCharts.kt:176-194 has no VARIANT_TIMELINE or .addPaletteEntry(VARIANT_TIMELINE).",
+        "location": "modules/charts/common/src/main/resources/schemas/components/embr.chart.apex-charts/variants/timeline.props.json:1-2; modules/charts/common/src/main/kotlin/com/mussonindustrial/ignition/embr/charts/component/chart/ApexCharts.kt:15-197"
+      },
+      {
+        "id": "F-04",
+        "severity": "NOTE",
+        "section": "The external library boundary is not locally proven",
+        "observation": "The source proves that a configured type reaches the external ApexCharts instance, but repository-only evidence does not prove that every official or newly suggested type renders under the pinned dependency version.",
+        "evidence": "modules/charts/web/package.json:18-20 pins apexcharts 3.54.1; ApexChartsComponent.tsx:69-79 forwards type; react/ApexCharts.tsx:66-67 calls new ApexCharts and render.",
+        "location": "modules/charts/web/package.json:18-20; modules/charts/web/src/components/apexcharts/ApexChartsComponent.tsx:69-79; modules/charts/web/src/components/apexcharts/react/ApexCharts.tsx:66-67"
+      },
+      {
+        "id": "F-05",
+        "severity": "NOTE",
+        "section": "Chart-specific tests and source examples are absent",
+        "observation": "No chart test files were found under the web source test globs; the Vite test configuration explicitly accepts zero tests.",
+        "evidence": "modules/charts/web/vite.config.ts:38-46 sets passWithNoTests: true and includes src/**/*.{test,spec} and __tests__/**/*.{test,spec} globs.",
+        "location": "modules/charts/web/vite.config.ts:38-46; modules/charts/web/src"
+      },
+      {
+        "id": "F-06",
+        "severity": "NOTE",
+        "section": "Legacy Apex is a separate compatibility contract",
+        "observation": "Legacy Apex has a different ID, a 17-value enum, a separate event descriptor set, a separate browser implementation, and a specialized gateway delegate.",
+        "evidence": "ApexChartsLegacy.kt:15 uses kyvislabs.display.apexchart; kyvislabs.display.apexchart/props.json:7-29 defines its own enum; ChartsGatewayContext.kt:27-30 registers a specialized ApexChartsLegacyModelDelegate.",
+        "location": "modules/charts/common/src/main/kotlin/com/mussonindustrial/ignition/embr/charts/component/chart/ApexChartsLegacy.kt:13-224; modules/charts/gateway/src/main/kotlin/com/mussonindustrial/ignition/embr/charts/ChartsGatewayContext.kt:27-30"
+      }
+    ],
+    "stats": {
+      "moduleComponents": 3,
+      "officialApexChartRows": 26,
+      "officialDistinctApexChartTypes": 24,
+      "modernApexSchemaSuggestions": 16,
+      "modernApexRegisteredNonBasePaletteEntries": 18,
+      "modernApexVariantResourceFiles": 20,
+      "chartjsSchemaSuggestions": 22,
+      "chartjsRegisteredNonBasePaletteEntries": 9,
+      "legacyApexEnumValues": 17,
+      "legacyApexRegisteredNonBasePaletteEntries": 4,
+      "chartTestFilesFound": 0,
+      "rangeBarVariantRegistered": false,
+      "modernPieVariantRootType": "donut"
+    }
+  }
+  </script>
+</main>
+</body>
+</html>

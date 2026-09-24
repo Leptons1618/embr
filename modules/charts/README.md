@@ -27,6 +27,12 @@ A module for Ignition that adds a collection of enhanced Perspective charting co
 | [ApexCharts Component](https://docs.mussonindustrial.com/ignition/embr-charts/components/apex-charts/)                 | Charting | ApexCharts renders charts using SVG instead of canvas, offering crisp, scalable visuals and seamless CSS styling. While not as fast as canvas for massive datasets, SVG enables rich interactivity, easier DOM manipulation, and high-quality graphics across a wide range of chart types.        |     |
 | [ApexCharts (Legacy) Component](https://docs.mussonindustrial.com/ignition/embr-charts/components/apex-charts-legacy/) | Charting | A drop-in replacement for [Kyvis-Labs/ignition-apexcharts-module](https://github.com/Kyvis-Labs/ignition-apexcharts-module).                                                                                                                                                                      |     |
 
+### ApexCharts coverage
+
+The modern ApexCharts component supports the standard line, area, bar/column, scatter, bubble, heatmap, candlestick, box plot, range bar, range area, treemap, mixed, pie, donut, radial bar, radar, polar area, funnel, and pyramid charts, plus violin, raincloud, streamgraph, waterfall, dumbbell, gauge, histogram, sunburst, unit, and waffle charts.
+
+Raincloud, unit, and waffle are ApexCharts feature-dependent chart types. Their availability follows the bundled ApexCharts package and licensing terms.
+
 ---
 
 ## Changelog

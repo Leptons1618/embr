@@ -1,0 +1,12 @@
+{
+  "type": "violin",
+  "series": [
+    { "name": "Measurement", "data": [{ "x": "Group A", "y": { "density": [[42, 0.01], [46, 0.06], [50, 0.13], [54, 0.06], [58, 0.01]], "points": [48.2, 51.7, 49.9, 53.1, 50.4] } }, { "x": "Group B", "y": { "density": [[55, 0.02], [60, 0.1], [62, 0.18], [64, 0.1], [69, 0.02]], "points": [61.2, 63.4, 60.1, 62.8] } }] }
+  ],
+  "options": {
+    "chart": {},
+    "title": { "align": "left", "text": "Violin Chart" },
+    "plotOptions": { "violin": { "points": { "show": true } } }
+  },
+  "style": {}
+}
